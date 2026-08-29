@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-const SONG_SRC = '/assets/birthday-song.mp3'
+const SONG_SRC = `${import.meta.env.BASE_URL}assets/birthday-song.mp3`
 
 export function BackgroundMusic() {
   const audioRef = useRef(null)
@@ -10,33 +10,35 @@ export function BackgroundMusic() {
     if (!audio) return undefined
 
     audio.volume = 0.75
+    audio.loop = true
 
     const playMusic = () => {
       if (!audio.paused) return
+
       audio.play().catch(() => {
-        // Audible autoplay can be blocked by the browser.
-        // The first user interaction below retries playback.
+        // Browser autoplay may be blocked.
       })
     }
 
-    // Start as soon as the audio element is mounted.
+    // Try autoplay when website opens
     playMusic()
 
-    const retry = () => {
+    // Start music from birthday buttons/menu
+    const startFromAction = () => {
       playMusic()
-      window.removeEventListener('pointerdown', retry)
-      window.removeEventListener('keydown', retry)
-      window.removeEventListener('touchstart', retry)
     }
 
-    window.addEventListener('pointerdown', retry, { once: true })
-    window.addEventListener('keydown', retry, { once: true })
-    window.addEventListener('touchstart', retry, { once: true, passive: true })
+    window.addEventListener(
+      'birthday-start-music',
+      startFromAction,
+    )
 
     return () => {
-      window.removeEventListener('pointerdown', retry)
-      window.removeEventListener('keydown', retry)
-      window.removeEventListener('touchstart', retry)
+      window.removeEventListener(
+        'birthday-start-music',
+        startFromAction,
+      )
+
       audio.pause()
     }
   }, [])
@@ -47,6 +49,7 @@ export function BackgroundMusic() {
       src={SONG_SRC}
       preload="auto"
       autoPlay
+      loop
       aria-hidden="true"
     />
   )

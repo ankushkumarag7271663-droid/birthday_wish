@@ -58,6 +58,46 @@ function App() {
   }, [])
 
   useEffect(() => {
+  const wishSection = document.getElementById('wish')
+
+  if (!wishSection) return undefined
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        window.dispatchEvent(new Event('birthday-start-music'))
+      }
+    },
+    { threshold: 0.25 },
+  )
+
+  observer.observe(wishSection)
+
+  return () => observer.disconnect()
+}, [])
+
+  useEffect(() => {
+  const wishSection = document.getElementById('wish')
+
+  if (!wishSection) return undefined
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        window.dispatchEvent(new Event('birthday-start-music'))
+      }
+    },
+    {
+      threshold: 0.25,
+    },
+  )
+
+  observer.observe(wishSection)
+
+  return () => observer.disconnect()
+}, [])
+
+  useEffect(() => {
     const onKeyDown = (event) => {
       if (event.key === 'Escape') setMenuOpen(false)
     }
@@ -65,10 +105,20 @@ function App() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [])
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    setMenuOpen(false)
+ const scrollTo = (id) => {
+  // Start the birthday music when the user opens
+  // the birthday wish or navigates to the Wishes section.
+  if (id === 'wish' || id === 'wishes') {
+    window.dispatchEvent(new Event('birthday-start-music'))
   }
+
+  document.getElementById(id)?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  })
+
+  setMenuOpen(false)
+}
 
   const replay = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -98,7 +148,7 @@ function App() {
           <div className="container hero-grid">
             <Reveal className="hero-copy">
               <p className="eyebrow">A little birthday note, wrapped in tulips</p>
-              <h1 id="hero-title">Happy Birthday, <em>{FRIEND_NAME}</em> <span aria-hidden="true">🌷</span></h1>
+              <h1 id="hero-title">Happy Birthday, <em>LAXMI</em> <span aria-hidden="true">🌷</span></h1>
               <p className="hero-subtitle">Some people quietly make ordinary moments feel a little more special.</p>
               <button className="button button-primary" onClick={() => scrollTo('wish')}>
                 Open Your Birthday Wish <span aria-hidden="true">🌷</span>
@@ -223,7 +273,7 @@ function App() {
               <p>I hope when you look back at this year, you find more smiles than worries, more memories than regrets, and more moments that make you genuinely happy.</p>
               <p>Happy Birthday once again. Stay kind, stay curious, keep smiling, and keep being you.</p>
               <p>Wishing you a beautiful year ahead. 🌷</p>
-              <div className="final-name">Happy Birthday, {FRIEND_NAME}. <span aria-hidden="true">🌷</span></div>
+              <div className="final-name">Happy Birthday, LAXMI. <span aria-hidden="true">🌷</span></div>
               <button className="button button-secondary" onClick={replay}>Replay the Wish <span aria-hidden="true">↻</span></button>
             </Reveal>
           </div>
