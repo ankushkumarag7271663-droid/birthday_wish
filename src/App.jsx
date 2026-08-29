@@ -148,7 +148,7 @@ function App() {
           <div className="container hero-grid">
             <Reveal className="hero-copy">
               <p className="eyebrow">A little birthday note, wrapped in tulips</p>
-              <h1 id="hero-title">Happy Birthday, <em>LAXMI</em> <span aria-hidden="true">🌷</span></h1>
+              <h1 id="hero-title">Happy Birthday, <em>Dear Laxmi</em> <span aria-hidden="true">🌷</span></h1>
               <p className="hero-subtitle">Some people quietly make ordinary moments feel a little more special.</p>
               <button className="button button-primary" onClick={() => scrollTo('wish')}>
                 Open Your Birthday Wish <span aria-hidden="true">🌷</span>
@@ -273,7 +273,7 @@ function App() {
               <p>I hope when you look back at this year, you find more smiles than worries, more memories than regrets, and more moments that make you genuinely happy.</p>
               <p>Happy Birthday once again. Stay kind, stay curious, keep smiling, and keep being you.</p>
               <p>Wishing you a beautiful year ahead. 🌷</p>
-              <div className="final-name">Happy Birthday, LAXMI. <span aria-hidden="true">🌷</span></div>
+              <div className="final-name">Happy Birthday, Dear Laxmi Gupta. <span aria-hidden="true">🌷</span></div>
               <button className="button button-secondary" onClick={replay}>Replay the Wish <span aria-hidden="true">↻</span></button>
             </Reveal>
           </div>
